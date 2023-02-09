@@ -16,5 +16,6 @@ authRouter.post(
 authRouter.post("/login", validation(authSchema), ctrlWrapper(ctrl.login));
 authRouter.get("/current", auth, ctrlWrapper(ctrl.userCurrent));
 authRouter.get("/logout", auth, ctrlWrapper(ctrl.logout));
+authRouter.get("/", ctrlWrapper(ctrl.getAllUsers));
 
 module.exports = authRouter;
