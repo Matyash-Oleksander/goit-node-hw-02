@@ -23,5 +23,11 @@ authRouter.patch(
   upload.single("avatar"),
   ctrlWrapper(ctrl.updateAvatar)
 );
+authRouter.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
+authRouter.post(
+  "/verify",
+  validation(emailSchema),
+  ctrlWrapper(ctrl.userRepeatVerify)
+);
 
 module.exports = authRouter;

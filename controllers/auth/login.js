@@ -16,7 +16,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-  if (!user) {
+  if (!user || !user.verify) {
     throw new Unauthorized(`Email ${email} or password is wrong`);
   }
 
@@ -29,12 +29,11 @@ const login = async (req, res) => {
   const payload = {
     id: user._id,
   };
-  // console.log(payload);
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "60m" });
   await User.findByIdAndUpdate(user._id, { token });
   user.token = token;
-  // console.log(token);
+
   res.status(200).json({
     status: "succes",
     code: 200,
