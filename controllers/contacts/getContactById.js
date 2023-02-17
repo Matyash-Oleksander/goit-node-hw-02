@@ -6,15 +6,15 @@ const { NotFound } = require("http-errors");
 const getContactById = async (req, res, next) => {
   const { id } = req.params;
   const { _id } = req.user;
-  const result = await Contact.findOne({ _id: id });
-  // const success = String(result.owner) === String(_id);
-  if (!result) {
-    throw new NotFound(`Contact with id=${id} not found`);
-  }
-  res.json({
-    status: "success",
-    code: 200,
-    data: { result },
+  await Contact.findOne({ _id: id }, { owner: _id }, (error, result) => {
+    if (error) {
+      throw new NotFound(`Contact with id=${id} not found`);
+    }
+    res.json({
+      status: "success",
+      code: 200,
+      data: { result },
+    });
   });
 };
 
