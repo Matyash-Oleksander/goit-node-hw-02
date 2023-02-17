@@ -6,8 +6,8 @@ const updateContactById = async (req, res, next) => {
   const { id } = req.params;
   const { _id } = req.user;
 
-  const result = await Contact.findByIdAndUpdate(
-    id,
+  const result = await Contact.findOneAndUpdate(
+    { _id: id },
     req.body,
     { new: true },
     { owner: _id }
@@ -21,5 +21,25 @@ const updateContactById = async (req, res, next) => {
     data: { result },
   });
 };
+
+// const updateContactById = async (req, res, next) => {
+//   const { id } = req.params;
+//   const { _id } = req.user;
+
+//   const result = await Contact.findByIdAndUpdate(
+//     id,
+//     req.body,
+//     { new: true },
+//     { owner: _id }
+//   );
+//   if (!result) {
+//     throw new NotFound(`Contact with id=${id} not found`);
+//   }
+//   res.json({
+//     status: "success",
+//     code: 200,
+//     data: { result },
+//   });
+// };
 
 module.exports = updateContactById;

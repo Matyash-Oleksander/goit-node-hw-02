@@ -8,7 +8,7 @@ const { Conflict } = require("http-errors");
 
 const { nanoid } = require("nanoid");
 
-const sendEmail = require("../../helpers");
+const { sendEmail } = require("../../helpers");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
