@@ -7,10 +7,9 @@ const updateContactById = async (req, res, next) => {
   const { _id } = req.user;
 
   await Contact.findOneAndUpdate(
-    { _id: id },
+    { owner: id, _id },
     req.body,
     { new: true },
-    { owner: _id },
     (error, result) => {
       if (error) {
         throw new NotFound(`Contact with id=${id} not found`);
